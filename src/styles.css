@@ -1,0 +1,402 @@
+:root {
+  --tinta: #1c1311;
+  --brasa: #d9461f;
+  --brasa-viva: #e4552b;
+  --llama: #f08a3c;
+  --papel: #f4f2ef;
+  --ceniza: #e4ded8;
+  --linea: #d6cfc8;
+  --texto: #1c1311;
+  --suave: #6f6560;
+  --verde-wa: #1f9d55;
+  --ritmo: 240ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+/* ---------- Modo oscuro ---------- */
+:root[data-tema='oscuro'] :where(button:not(.tema, .corazon)) {
+  border-color: var(--texto);
+  color: var(--texto);
+  background-image: linear-gradient(var(--texto), var(--texto));
+}
+:root[data-tema='oscuro'] :where(button:not(.tema, .corazon):hover:not(:disabled)) {
+  color: var(--papel);
+}
+
+/* Los botones usaban --tinta (oscuro): en modo oscuro pasan a color claro */
+:root[data-tema='oscuro'] :where(button) {
+  border-color: var(--texto);
+  color: var(--texto);
+  background-image: linear-gradient(var(--texto), var(--texto));
+}
+:root[data-tema='oscuro'] :where(button:hover:not(:disabled)) {
+  color: var(--papel);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--texto);
+  font-family: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-stretch: 100%;
+  line-height: 1.55;
+  background-color: var(--papel);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .11 0 0 0 0 .07 0 0 0 0 .06 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 620px 420px at 100% 0%, rgba(240, 138, 60, 0.11), transparent 70%),
+    radial-gradient(ellipse 560px 440px at 0% 100%, rgba(217, 70, 31, 0.08), transparent 70%);
+}
+
+h1,
+h2 {
+  margin: 0 0 1rem;
+  font-weight: 800;
+  font-stretch: 62%;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: 0.005em;
+}
+
+a {
+  color: var(--brasa);
+}
+
+::selection {
+  background: var(--brasa);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--llama);
+  outline-offset: 3px;
+}
+
+/* ---------- Botones secundarios: se rellenan de abajo hacia arriba ---------- */
+:where(button) {
+  font: inherit;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--tinta);
+  border-radius: 2px;
+  color: var(--tinta);
+  background-color: transparent;
+  background-image: linear-gradient(var(--tinta), var(--tinta));
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 0%;
+  cursor: pointer;
+  transition:
+    background-size 320ms ease,
+    color 200ms ease,
+    transform var(--ritmo);
+}
+:where(button:hover:not(:disabled)) {
+  background-size: 100% 100%;
+  color: #fff;
+}
+:where(button:active:not(:disabled)) {
+  transform: translateY(1px);
+}
+:where(button:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Botones principales: brasa con un brillo que cruza ---------- */
+.boton,
+.primario,
+.btn-whatsapp {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-block;
+  padding: 0.8rem 1.7rem;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  border: 0;
+  border-radius: 2px;
+  background-color: var(--brasa);
+  background-image: none;
+  cursor: pointer;
+  transition:
+    transform var(--ritmo),
+    box-shadow var(--ritmo),
+    background-color var(--ritmo);
+}
+.boton::after,
+.primario::after,
+.btn-whatsapp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.3) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 700ms ease;
+}
+.boton:hover,
+.primario:hover:not(:disabled),
+.btn-whatsapp:hover {
+  color: #fff;
+  background-color: var(--brasa-viva);
+  box-shadow: 0 10px 26px rgba(217, 70, 31, 0.3);
+  transform: translateY(-1px);
+}
+.boton:hover::after,
+.primario:hover:not(:disabled)::after,
+.btn-whatsapp:hover::after {
+  transform: translateX(120%);
+}
+.boton:active,
+.primario:active:not(:disabled),
+.btn-whatsapp:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.primario:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-whatsapp {
+  background-color: var(--verde-wa);
+}
+.btn-whatsapp:hover {
+  background-color: #1a8a4c;
+  box-shadow: 0 10px 24px rgba(31, 157, 85, 0.28);
+}
+
+/* Botón de contorno para fondos oscuros */
+.boton-linea {
+  display: inline-block;
+  padding: 0.8rem 1.7rem;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 2px;
+  background-image: linear-gradient(#fff, #fff);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100% 0%;
+  transition:
+    background-size 320ms ease,
+    color 200ms ease;
+}
+.boton-linea:hover {
+  background-size: 100% 100%;
+  color: var(--tinta);
+}
+
+/* ---------- Productos ---------- */
+.tarjeta {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Marco: línea interior, sombra desplazada tipo impresión y viñeta */
+.foto {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: linear-gradient(160deg, #e6e0da, #d8cfc7);
+  box-shadow:
+    0 0 0 1px var(--linea),
+    7px 7px 0 -1px var(--ceniza);
+  transition: box-shadow 400ms ease;
+}
+.foto::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 1;
+  height: 35%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(28, 19, 17, 0.28), transparent);
+}
+.foto::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  z-index: 1;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition:
+    inset 400ms ease,
+    border-color 400ms ease;
+}
+.tarjeta:hover .foto {
+  box-shadow:
+    0 0 0 1px var(--linea),
+    9px 9px 0 -1px rgba(217, 70, 31, 0.28);
+}
+.tarjeta:hover .foto::after {
+  inset: 5px;
+  border-color: rgba(240, 138, 60, 0.95);
+}
+.foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  color: transparent;
+  transition: transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.tarjeta:hover .foto img {
+  transform: scale(1.04);
+}
+
+.tarjeta h2,
+.tarjeta h3 {
+  display: inline;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  font-stretch: 100%;
+  text-transform: none;
+  line-height: 1.6;
+  background: linear-gradient(var(--brasa), var(--brasa)) left bottom / 0% 2px no-repeat;
+  transition: background-size 350ms ease;
+}
+.tarjeta:hover h2,
+.tarjeta:hover h3 {
+  background-size: 100% 2px;
+}
+.tarjeta .foto + h2,
+.tarjeta .foto + h3 {
+  display: inline-block;
+  margin-top: 1rem;
+}
+.tarjeta p {
+  margin: 0.2rem 0 0;
+}
+
+/* ---------- Etiquetas y precios ---------- */
+.etiquetas {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.etiquetas-fila {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+.etiqueta {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+}
+.etiqueta-nuevo {
+  background: var(--tinta);
+}
+.etiqueta-oferta {
+  background: var(--brasa);
+}
+.precio-viejo {
+  margin-right: 0.4rem;
+  color: var(--suave);
+  text-decoration: line-through;
+}
+.precio-oferta {
+  color: var(--brasa);
+  font-weight: 700;
+}
+
+/* ---------- Menos movimiento ---------- */
+/* Solo se quitan los saltos bruscos; cinta, chispas y franja son lentos y suaves */
+@media (prefers-reduced-motion: reduce) {
+  .boton:hover,
+  .primario:hover,
+  .btn-whatsapp:hover,
+  .tarjeta:hover .foto img {
+    transform: none;
+  }
+}
+
+/* En pantallas táctiles no existe "hover": el brillo de los botones corre solo */
+@media (hover: none) {
+  .boton::after,
+  .primario::after,
+  .btn-whatsapp::after {
+    animation: brillo 4.5s ease-in-out infinite;
+  }
+  .tarjeta:active .foto img {
+    transform: scale(1.04);
+  }
+}
+@keyframes brillo {
+  0%, 60% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+:root {
+  --trama-color: #d9461f;
+  --trama-op: 0.16;
+  --trama-forma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 30 26 26 34 22Q42 32 50 22L66 30 59 46 52 42V74H32V42L25 46Z'/%3E%3Cpath d='M140 22 146 36 161 37 150 47 153 62 140 54 127 62 130 47 119 37 134 36Z'/%3E%3Cpath d='M70 112a6 6 0 1 1 6 6v6L102 139a4 4 0 0 1-2 7.5H50a4 4 0 0 1-2-7.5L76 124'/%3E%3Cpath d='M158 112 140 138H152L146 158 166 130H153Z'/%3E%3Ccircle cx='110' cy='60' r='2.5'/%3E%3Ccircle cx='182' cy='92' r='3'/%3E%3Ccircle cx='30' cy='182' r='2.5'/%3E%3Cpath d='M20 120v10M15 125h10M100 178q6-8 12 0t12 0 12 0'/%3E%3C/svg%3E");
+}
+/* dentro de :root[data-tema='oscuro'] { ... } agrega: */
+/*   --trama-color: #f08a3c;  --trama-op: 0.18; */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--trama-color);
+  opacity: var(--trama-op);
+  -webkit-mask-image: var(--trama-forma);
+  mask-image: var(--trama-forma);
+  -webkit-mask-size: 200px 200px;
+  mask-size: 200px 200px;
+}
+.corazon {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  background-image: none;
+  color: #1c1311;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.corazon svg { width: 1.3rem; height: 1.3rem; fill: none; stroke: currentColor; stroke-width: 2; }
+.corazon.activo { color: var(--brasa); }
+.corazon.activo svg { fill: currentColor; animation: latido 380ms ease; }
+@keyframes latido { 40% { transform: scale(1.35); } }
+
+/* ---------- Modo oscuro (va al final del archivo) ---------- */
+:root[data-tema='oscuro'] {
+  color-scheme: dark;
+  --papel: #15100e;
+  --ceniza: #2b211d;
+  --linea: #3d312b;
+  --texto: #efe7e0;
+  --suave: #a99d95;
+  --trama-color: #f08a3c;
+  --trama-op: 0.18;
+}
+:root[data-tema='oscuro'] :where(button:not(.tema, .corazon)) {
+  border-color: var(--texto);
+  color: var(--texto);
+  background-image: linear-gradient(var(--texto), var(--texto));
+}
+:root[data-tema='oscuro'] :where(button:not(.tema, .corazon):hover:not(:disabled)) {
+  color: var(--papel);
+}

@@ -1,0 +1,74 @@
+:host {
+  display: block;
+}
+.escena {
+  position: relative;
+  max-width: 400px;
+  margin-inline: auto;
+  padding-top: 6.5rem;
+  /* Rayos que giran detrás del personaje */
+.escena::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  z-index: -1;
+  width: 135%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(rgba(240, 138, 60, 0.28) 0 9deg, transparent 9deg 18deg);
+  -webkit-mask-image: radial-gradient(closest-side, #000 40%, transparent 72%);
+  mask-image: radial-gradient(closest-side, #000 40%, transparent 72%);
+  animation: gira 50s linear infinite;
+}
+@keyframes gira { to { rotate: 360deg; } }
+
+
+  from { transform: translateY(0) rotate(var(--giro)); }
+  to { transform: translateY(-12px) rotate(calc(var(--giro) * -1)); }
+}
+
+.base {
+  display: block;
+  width: auto;
+  height: clamp(240px, 50vw, 380px);   /* ← este valor */
+  margin-inline: auto;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.45));
+}
+.globo {
+  position: absolute;
+  left: 0;
+  right: 6%;
+  bottom: calc(100% - 6rem);
+  padding: 0.8rem 1.1rem;
+  background: #fff;
+  color: #1c1311;
+  border: 2px solid #1c1311;
+  border-radius: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  box-shadow: 5px 5px 0 var(--brasa);
+}
+.globo::after {
+  content: '';
+  position: absolute;
+  bottom: -11px;
+  left: 62%;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-right: 2px solid #1c1311;
+  border-bottom: 2px solid #1c1311;
+  transform: rotate(45deg);
+}
+.globo span {
+  display: block;
+  animation: entra 400ms ease both;
+}
+@keyframes entra {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}

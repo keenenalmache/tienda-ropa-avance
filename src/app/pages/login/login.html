@@ -1,0 +1,21 @@
+<section class="login">
+  <h1>Acceso del administrador</h1>
+
+  <form [formGroup]="form" (ngSubmit)="entrar()">
+    <label>
+      Correo
+      <input type="email" formControlName="correo" autocomplete="username" />
+    </label>
+
+    <label>
+      Contraseña
+      <input type="password" formControlName="clave" autocomplete="current-password" />
+    </label>
+
+    @if (aviso()) {
+      <p class="error">{{ aviso() }}</p>
+    }
+
+    <button type="submit" class="primario">Entrar</button>
+  </form>
+</section>
