@@ -6,7 +6,7 @@
   max-width: 400px;
   margin-inline: auto;
   padding-top: 6.5rem;
-  /* Rayos que giran detrás del personaje */
+
 .escena::before {
   content: '';
   position: absolute;
